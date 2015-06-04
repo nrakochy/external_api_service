@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/nrakochy/external_api_service.svg?branch=master)](https://travis-ci.org/nrakochy/external_api_service.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/nrakochy/external_api_service/badge.svg?branch=master)](https://coveralls.io/r/nrakochy/external_api_service?branch=master)
+
 # ExternalApiService
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/external_api_service`. To experiment with that code, run `bin/console` for an interactive prompt.
