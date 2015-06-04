@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/nrakochy/external_api_service.svg?branch=master)](https://travis-ci.org/nrakochy/external_api_service.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/nrakochy/external_api_service/badge.svg?branch=master)](https://coveralls.io/r/nrakochy/external_api_service?branch=master)
+[![Gem Version](https://badge.fury.io/rb/external_api_service.svg)](http://badge.fury.io/rb/external_api_service)
 
 # ExternalApiService
 

@@ -28,4 +28,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.2.0"
   spec.add_development_dependency 'coveralls', '~> 0.8.1'
   spec.add_development_dependency 'webmock', '~> 1.21.0'
+  spec.add_development_dependency 'yard', '~> 0.8.7.6'
 end
