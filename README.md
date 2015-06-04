@@ -27,14 +27,14 @@ To use, you need to require the service module wherever you are wanting to use i
 To make a GET request, you need an endpoint (required), and any query params in a Hash (optional). The endpoint must return `JSON`.
 It will work with `HTTPS` or `HTTP`. Call `get_service`:
 
-  # no params
-  url = “https://data.cityofchicago.org/Buildings/Problem-Landlord-List-Map/dip3-ud6z”
-  ExternalApiService.get_service(url)
+    # no params
+    url = “https://data.cityofchicago.org/Buildings/Problem-Landlord-List-Map/dip3-ud6z”
+    ExternalApiService.get_service(url)
 
-  # with params
-  url = “https://my.endpoint/path”
-  params = { sample_category: “sample_category_name” }
-  ExternalApiService.get_service(url, params)
+    # with params
+    url = “https://my.endpoint/path”
+    params = { sample_category: “sample_category_name” }
+    ExternalApiService.get_service(url, params)
 
 `get_service` will transform the JSON to Ruby Hash with symbolized names:
 
@@ -48,6 +48,7 @@ It will work with `HTTPS` or `HTTP`. Call `get_service`:
 
 ## Features To-Do
 Does not support `JSONP`.
+
 Only makes GET requests. Probably need to update to make POST requests as well.
 
 ## Contributing
