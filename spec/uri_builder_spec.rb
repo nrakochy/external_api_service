@@ -6,7 +6,8 @@ describe URI_Builder do
   describe "#build_uri" do
     it "converts a url string to a URI object with accessible URI attributes" do
       sample_url = "http://sub.example.com/google"
-      uri = builder.build_uri(sample_url)
+      empty_query = {}
+      uri = builder.build_uri(sample_url, empty_query)
       expect(uri.class).to eq(URI::HTTP)
       expect(uri.path).to eq("/google")
       expect(uri.host).to eq("sub.example.com")

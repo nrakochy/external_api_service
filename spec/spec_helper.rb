@@ -1,14 +1,14 @@
 require 'coveralls'
+Coveralls.wear!
+
 require 'webmock/rspec'
 
-$LOAD_PATH.unshift File.expand_path('../../lib/external_api_service/', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../../lib/', __FILE__)
 
-require 'external_api_service'
-require 'http_client'
-require 'https_client'
-require 'uri_builder'
+require 'external_api_service.rb'
+require 'external_api_service/http_client'
+require 'external_api_service/https_client'
+require 'external_api_service/uri_builder'
 
-
-Coveralls.wear!
 WebMock.disable_net_connect!(allow_localhost: true)
 

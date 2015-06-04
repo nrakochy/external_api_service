@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'external_api_service'
+require 'external_api_service/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "external_api_service"
