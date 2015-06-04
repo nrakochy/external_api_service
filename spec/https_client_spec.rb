@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe HTTP_Client do
-  let(:client){  HTTP_Client.new }
+describe HTTPS_Client do
+  let(:client){  HTTPS_Client.new }
 
   describe "#get_request" do
-    let(:endpoint){ URI("http://sub.example.com/path?zipcode=60201&age=35") }
+    let(:endpoint){ URI("https://sub.example.com/path?zipcode=60201&age=35") }
 
     it "makes a get request to an external endpoint" do
       stub_request(:get, endpoint)
@@ -39,6 +39,5 @@ describe HTTP_Client do
       error_response = client.parse_response(error)
       expect(error_response[:error].code).to eq( 422 )
     end
-
   end
 end

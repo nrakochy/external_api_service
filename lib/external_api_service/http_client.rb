@@ -23,7 +23,7 @@ class HTTP_Client
 
   def parse_response(response)
     if (response.code != "200" || response.code == nil)
-      { error: response.code }
+      { error: response }
     else
       JSON.parse(response.body, symbolize_names: true)
     end
