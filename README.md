@@ -3,10 +3,6 @@
 
 # ExternalApiService
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/external_api_service`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -24,14 +20,35 @@ Or install it yourself as:
     $ gem install external_api_service
 
 ## Usage
+To use, you need to require the service module wherever you are wanting to use it:
 
-TODO: Write usage instructions here
+    require ‘ExternalApiService’
 
-## Development
+To make a GET request, you need an endpoint (required), and any query params in a Hash (optional). The endpoint must return `JSON`.
+It will work with `HTTPS` or `HTTP`. Call `get_service`:
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+  # no params
+  url = “https://data.cityofchicago.org/Buildings/Problem-Landlord-List-Map/dip3-ud6z”
+  ExternalApiService.get_service(url)
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+  # with params
+  url = “https://my.endpoint/path”
+  params = { sample_category: “sample_category_name” }
+  ExternalApiService.get_service(url, params)
+
+`get_service` will transform the JSON to Ruby Hash with symbolized names:
+
+    # First entry from the Chicago Problem Landlord List in Array of Hashes (“https://data.cityofchicago.org/Buildings/Problem-Landlord-List-Map/dip3-ud6z”)
+
+    [{:respondent=>”Ravine Properties, LLC”, :secondary_address=>”5849 W ARTHINGTON ST”,
+    :location=>{:needs_recoding=>false, :longitude=>”-87.7716557532”, :latitude=>”41.8690630014”},
+    :census_tracts=>”17031831400”, :census_blocks=>”170318314002042”, :x_coordinate=>”1137233.9789750562”,
+    :street_block_id=>”7445”, :ward=>”29”, :address=>”1001 S MAYFIELD AVE”, :y_coordinate=>”1895377.068646989”,
+    :community_area=>”AUSTIN”, :longitude=>”-87.7716557532”, :latitude=>”41.8690630014”, :community_area_number=>”25”}]
+
+## Features To-Do
+Does not support `JSONP`.
+Only makes GET requests. Probably need to update to make POST requests as well.
 
 ## Contributing
 
