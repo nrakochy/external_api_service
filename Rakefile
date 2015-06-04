@@ -8,6 +8,6 @@ begin
     task.rspec_opts = ['--color', '--format documentation']
   end
 
-  task :default => [:specs, 'coveralls:push']
+  task :default => [:spec, 'coveralls:push']
 rescue
 end
