@@ -8,8 +8,12 @@ class HTTP_Client
     parse_response(response)
   end
 
+  def post
+  end
+
   def get_request(endpoint)
-    Net::HTTP.start(endpoint.host, endpoint.port) do |client|
+    check_ssl = endpoint.scheme == "https"
+    Net::HTTP.start(endpoint.host, endpoint.port, :use_ssl => check_ssl) do |client|
       retries = 5
       begin
         new_request = Net::HTTP::Get.new(endpoint)

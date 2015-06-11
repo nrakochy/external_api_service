@@ -1,5 +1,4 @@
 require 'external_api_service/http_client'
-require 'external_api_service/https_client'
 require 'external_api_service/uri_builder'
 
 module ExternalApiService
@@ -14,8 +13,13 @@ module ExternalApiService
   # ExternalApiService.get_service("sample_endpoint", {sample_hash: "sample_request"})
 
   def self.get_service(url, queries = nil)
-    uri = URI_Builder.new.build_uri(url, queries)
-    uri.scheme.include?("https") ? HTTPS_Client.new.get(uri) : HTTP_Client.new.get(uri)
+    uri = URI_Builder.build_uri(url, queries)
+    HTTP_Client.new.get(uri)
+  end
+
+  def self.post_service(url, queries = nil)
+    uri = URI_Builder.build_uri(url, queries)
+    HTTP_Client.new.post(uri)
   end
 
 end
