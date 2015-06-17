@@ -29,7 +29,7 @@ To make a GET request, you need an endpoint (required), and any query params in 
 It will work with `HTTPS` or `HTTP`. Call `get_service`:
 
     # no params
-    url = “https://data.cityofchicago.org/Buildings/Problem-Landlord-List-Map/dip3-ud6z”
+    url = 'https://data.cityofchicago.org/resource/dip3-ud6z.json'
     ExternalApiService.get_service(url)
 
     # with params
@@ -39,7 +39,7 @@ It will work with `HTTPS` or `HTTP`. Call `get_service`:
 
 `get_service` will transform the JSON to Ruby Hash with symbolized names:
 
-    # First entry from the Chicago Problem Landlord List in Array of Hashes (“https://data.cityofchicago.org/Buildings/Problem-Landlord-List-Map/dip3-ud6z”)
+    # First entry from the Chicago Problem Landlord List in Array of Hashes ('https://data.cityofchicago.org/resource/dip3-ud6z.json')
 
     [{:respondent=>”Ravine Properties, LLC”, :secondary_address=>”5849 W ARTHINGTON ST”,
     :location=>{:needs_recoding=>false, :longitude=>”-87.7716557532”, :latitude=>”41.8690630014”},
@@ -48,8 +48,6 @@ It will work with `HTTPS` or `HTTP`. Call `get_service`:
     :community_area=>”AUSTIN”, :longitude=>”-87.7716557532”, :latitude=>”41.8690630014”, :community_area_number=>”25”}]
 
 ## Features To-Do
-Does not support `JSONP`.
-
 Only makes GET requests. Probably need to update to make POST requests as well.
 
 ## Contributing
