@@ -30,13 +30,15 @@ module ExternalApiService
   #
   # @return Will transform the JSON to Ruby Hash with symbolized names
   #
-  # @example
-  # auth = {"api_key": "123key"}
-  # data_to_post: {sample_data: "sample"}
-  # ExternalApiService.post_service("sample_endpoint", data_to_post, auth)
   #
-  # Note:
-  # You have to have the trailing '/' for the path for Ruby to POST properly e.g. http://sample.com/
+  # @example Add a subscriber to your Mailchimp Account (Api V3)
+  #  auth = {'api_key': '123key'}
+  #  optional_header = {}
+  #  data_to_post: {'email' => 'example.email@example.com', 'status' => 'subscribed'}
+  #  endpoint = 'https://us9.api.mailchimp.com/3.0/lists/123uniquelistID/members'
+  #  ExternalApiService.post_service(endpoint, data_to_post, auth, optional_header)
+  #
+  # @note You have to have the trailing '/' for the path for Ruby to POST properly e.g. http://sample.com/
 
   def self.post_service(url, data_to_post, credentials, http_header_params = {})
     credentials_formatted_for_auth = credentials.to_a.flatten
