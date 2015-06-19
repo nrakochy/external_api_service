@@ -25,6 +25,7 @@ To use, you need to require the service module wherever you are wanting to use i
 
     require ‘ExternalApiService’
 
+### GET
 To make a GET request, you need an endpoint (required), and any query params in a Hash (optional). The endpoint must return `JSON`.
 It will work with `HTTPS` or `HTTP`. Call `get_service`:
 
@@ -47,8 +48,28 @@ It will work with `HTTPS` or `HTTP`. Call `get_service`:
     :street_block_id=>”7445”, :ward=>”29”, :address=>”1001 S MAYFIELD AVE”, :y_coordinate=>”1895377.068646989”,
     :community_area=>”AUSTIN”, :longitude=>”-87.7716557532”, :latitude=>”41.8690630014”, :community_area_number=>”25”}]
 
-## Features To-Do
-Only makes GET requests. Probably need to update to make POST requests as well.
+### POST
+To make a POST request, you need an endpoint (required), the data you want to post, and authentication. Right now it only supports basic auth.  
+The endpoint must accept and return `JSON`.
+
+There is a header param available, but it is optional, and `Net/HTTP` handles most of it behind the scenes.
+
+
+  #example: Add a subscriber to your Mailchimp Account (Api V3)
+  auth = {'api_key': '123key'}
+  optional_header = {}
+  data_to_post: {'email' => 'example.email@example.com', 'status' => 'subscribed'}
+  endpoint = 'https://us9.api.mailchimp.com/3.0/lists/123uniquelistID/members'
+  ExternalApiService.post_service(endpoint, data_to_post, auth, optional_header)
+
+Note:
+You have to have the trailing '/' for the path for Ruby to POST properly e.g. http://sample.com/ (I think)
+
+`post_service` will return the body of the response in a Ruby hash with symbolized keys.
+
+## Sandbox
+If you want to fire it up, you can run `bin/console` from the command line to launch it. You still need  `require ExternalApiService`,
+but you can see it in action.
 
 ## Contributing
 
