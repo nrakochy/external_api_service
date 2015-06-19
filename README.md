@@ -55,12 +55,12 @@ The endpoint must accept and return `JSON`.
 There is a header param available, but it is optional, and `Net/HTTP` handles most of it behind the scenes.
 
 
-  #example: Add a subscriber to your Mailchimp Account (Api V3)
-  auth = {'api_key': '123key'}
-  optional_header = {}
-  data_to_post: {'email' => 'example.email@example.com', 'status' => 'subscribed'}
-  endpoint = 'https://us9.api.mailchimp.com/3.0/lists/123uniquelistID/members'
-  ExternalApiService.post_service(endpoint, data_to_post, auth, optional_header)
+    #example: Add a subscriber to your Mailchimp Account (Api V3)
+    auth = {'api_key': '123key'}
+    optional_header = {}
+    data_to_post: {'email' => 'example.email@example.com', 'status' => 'subscribed'}
+    endpoint = 'https://us9.api.mailchimp.com/3.0/lists/123uniquelistID/members'
+    ExternalApiService.post_service(endpoint, data_to_post, auth, optional_header)
 
 Note:
 You have to have the trailing '/' for the path for Ruby to POST properly e.g. http://sample.com/ (I think)
