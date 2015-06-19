@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = ExternalApiService::VERSION
   spec.authors       = ["nrakochy"]
   spec.email         = ["nick.rakochy@gmail.com"]
-  spec.summary       = %q{Make a GET request to an external endpoint using only Ruby standard lib - No external dependencies}
+  spec.summary       = %q{Make a GET or POST request to an external endpoint using only Ruby standard lib - No external dependencies}
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
