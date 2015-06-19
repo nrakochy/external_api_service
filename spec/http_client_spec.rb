@@ -2,35 +2,34 @@ require 'spec_helper'
 
 describe HTTP_Client do
   let(:client){  HTTP_Client.new }
-  let(:endpoint){ URI("https://sub.example.com/path?zipcode=60201&age=35") }
-  let(:http_endpoint){ URI("http://sub.example.com/path?zipcode=60201&age=35") }
-  let(:sample_get_req){ Net::HTTP::Get.new(endpoint) }
-  let(:sample_post_req){ Net::HTTP::Post.new(endpoint) }
+  let(:https_endpoint){ URI("https://sub.example.com/path?zipcode=60201&age=35") }
+  let(:sample_get_req){ Net::HTTP::Get.new(https_endpoint) }
+  let(:sample_post_req){ Net::HTTP::Post.new(https_endpoint) }
 
 
   describe "#make_request" do
     context "using HTTPS" do
       it "makes a post request to an external endpoint" do
-        stub_request(:post, endpoint)
-        client.make_request(endpoint, sample_post_req)
-        expect(WebMock).to have_requested(:post, endpoint).
-          with(:query => {zipcode: 60201, age: 35})
+        stub_request(:post, https_endpoint)
+        client.make_request(https_endpoint, sample_post_req)
+        expect(WebMock).to have_requested(:post, https_endpoint)
       end
 
       it "retries hitting the endpoint 5 times when exception is raised" do
-        stub_request(:post, endpoint).to_raise(Exception)
-        client.make_request(endpoint, sample_post_req)
-        expect(WebMock).to have_requested(:post, endpoint).times(5)
+        stub_request(:post, https_endpoint).to_raise(Exception)
+        client.make_request(https_endpoint, sample_post_req)
+        expect(WebMock).to have_requested(:post, https_endpoint).times(5)
       end
 
       it "returns a Struct object with status code if requests are unsuccessful" do
-        stub_request(:post, endpoint).to_raise(Exception)
-        response = client.make_request(endpoint, sample_post_req)
+        stub_request(:post, https_endpoint).to_raise(Exception)
+        response = client.make_request(https_endpoint, sample_post_req)
         expect(response.code).to eq(422)
       end
     end
 
     context "using HTTP" do
+      let(:http_endpoint){ URI("http://sub.example.com/path?zipcode=60201&age=35") }
       it "makes a get request to an external endpoint" do
         stub_request(:get, http_endpoint)
         client.make_request(http_endpoint, sample_get_req)
@@ -39,6 +38,7 @@ describe HTTP_Client do
       end
 
       it "retries hitting the endpoint 5 times when exception is raised" do
+        stub_request(:get, https_endpoint).to_raise(Exception)
         client.make_request(http_endpoint, sample_get_req)
         expect(WebMock).to have_requested(:get, http_endpoint).times(5)
       end
@@ -48,6 +48,24 @@ describe HTTP_Client do
         response = client.make_request(http_endpoint, sample_get_req)
         expect(response.code).to eq(422)
       end
+    end
+  end
+
+  describe "#build_post_request" do
+    let(:http_params){
+      { uri: URI("https://sample.com/"), data: {"sample_data" => "sample"},
+      credentials: ["username", "samplepassword"], header_params: {} }
+    }
+    it "returns a NET::HTTP:Request object" do
+      expect(client.build_post_request(http_params).class).to eq(Net::HTTP::Post)
+    end
+
+    it "assigns POST request content-type as 'application/json'" do
+      expect(client.build_post_request(http_params)["Content-Type"]).to eq("application/json")
+    end
+
+    it "properly formats data payload as POST body" do
+      expect(client.build_post_request(http_params).body).to eq({"sample_data" => "sample"}.to_json)
     end
   end
 
@@ -64,7 +82,6 @@ describe HTTP_Client do
       data = response.new("204", sample_json)
       expect(client.parse_response(data)).to eq({ propensity: 0.26532, ranking: "C" })
     end
-
 
     it "returns a hash with error key for failed http req" do
       error = response.new(422, Exception)

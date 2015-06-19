@@ -10,16 +10,14 @@ class HTTP_Client
     parse_response(response)
   end
 
-  def post(url, data)
-    endpoint_uri = URI(url)
-    new_request = Net::HTTP::Post.new(endpoint_uri)
-    new_request.set_form_data(data)
-    response = make_request(endpoint_uri, new_request)
+  def post(http_params)
+    new_request = build_post_request(http_params)
+    response = make_request(http_params[:uri], new_request)
     parse_response(response)
   end
 
   def make_request(endpoint, formatted_request)
-    check_ssl = endpoint.scheme == "https"
+    check_ssl = (endpoint.scheme == "https")
     Net::HTTP.start(endpoint.host, endpoint.port, :use_ssl => check_ssl) do |client|
       retries = 5
       begin
@@ -35,10 +33,18 @@ class HTTP_Client
     if (response.code =~ /^2/ )
       JSON.parse(response.body, symbolize_names: true)
     else
-      puts response.body
       { error: response }
     end
   end
+
+  def build_post_request(http_params)
+    http_params[:header_params]["Content-Type"] = "application/json"
+    new_request = Net::HTTP::Post.new(http_params[:uri], http_params[:header_params])
+    new_request.basic_auth(http_params[:credentials][0], http_params[:credentials][1])
+    new_request.body = http_params[:data].to_json
+    new_request
+  end
+
 
   private
 
