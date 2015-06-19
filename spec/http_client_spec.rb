@@ -6,6 +6,26 @@ describe HTTP_Client do
   let(:sample_get_req){ Net::HTTP::Get.new(https_endpoint) }
   let(:sample_post_req){ Net::HTTP::Post.new(https_endpoint) }
 
+  describe "#get" do
+    it "makes a get request to an external endpoint" do
+      credentials = []
+      stub_request(:get, https_endpoint).to_return(
+        :body => {"sample_data" => "data"}.to_json, :status => 200, :headers => { 'Content-Length' => 3 })
+      expect(client.get(https_endpoint, credentials)).to eq({sample_data: "data"})
+    end
+  end
+
+  describe "#post" do
+    it "makes a post request to an external endpoint" do
+      sample_endpoint = URI("https://example.com/")
+      params = { credentials: ["username", "password"], uri: sample_endpoint, header_params: {}, data: {sample_user: "sample_data"} }
+      stub_request(:post, "https://username:password@example.com/").
+        with(:body => "{\"sample_user\":\"sample_data\"}",
+             :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'Host'=>'example.com', 'User-Agent'=>'Ruby'}).
+        to_return(:status => 200, :body => {message: "success"}.to_json, :headers => {})
+      expect(client.post(params)).to eq({message: "success"})
+    end
+  end
 
   describe "#make_request" do
     context "using HTTPS" do
@@ -54,7 +74,7 @@ describe HTTP_Client do
   describe "#build_post_request" do
     let(:http_params){
       { uri: URI("https://sample.com/"), data: {"sample_data" => "sample"},
-      credentials: ["username", "samplepassword"], header_params: {} }
+        credentials: ["username", "samplepassword"], header_params: {} }
     }
     it "returns a NET::HTTP:Request object" do
       expect(client.build_post_request(http_params).class).to eq(Net::HTTP::Post)
