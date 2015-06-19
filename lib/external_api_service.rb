@@ -26,6 +26,7 @@ module ExternalApiService
   # @param auth is required, as it is not an idempotent action.
   # You must format it as a hash of strings (both key and value) e.g. {"username" => "password"}
   # @param header_params are optional. This sets content-type to "application/json", so do not include Content-Type.
+  # You get several free headers with the Net/HTTP class, but it is there if you want it. Must be a hash
   #
   # @return Will transform the JSON to Ruby Hash with symbolized names
   #
